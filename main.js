@@ -70,3 +70,39 @@ export async function tambahtugas(tugas, status, prioritas, tanggal) {
 export async function hapustugas(docId) {
   await deleteDoc(doc(db, "senin", docId));
 }
+
+export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+  await updateDoc(doc(db, "senin", docId), {
+    tugas: tugas,
+    status: status,
+    prioritas: prioritas,
+    tanggal: tanggal,
+  });
+}
+
+// Mengubah 
+export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+  await updateDoc(doc(db, "senin", docId), {
+    tugas: tugas,
+    status: status,
+    prioritas: prioritas,
+    tanggal: tanggal,
+  });
+}
+
+// Mengubah tugas 
+export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+  await updateDoc(doc(db, "senin", docId), {
+    tugas: tugas,
+    status: status,
+    prioritas: prioritas,
+    tanggal: tanggal,
+  });
+}
+
+export async function ambiltugas(docId) {
+  const docRef = await doc(db, "senin", docId);
+  const docSnap = await getDoc(docRef);
+
+  return await docSnap.data();
+}
