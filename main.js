@@ -80,18 +80,9 @@ export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
   });
 }
 
-// Mengubah 
-export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
-  await updateDoc(doc(db, "senin", docId), {
-    tugas: tugas,
-    status: status,
-    prioritas: prioritas,
-    tanggal: tanggal,
-  });
-}
 
-// Mengubah tugas 
-export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+// ubah tugas
+export async function ubah(docId, tugas, status, prioritas, tanggal) {
   await updateDoc(doc(db, "senin", docId), {
     tugas: tugas,
     status: status,
@@ -106,3 +97,8 @@ export async function ambiltugas(docId) {
 
   return await docSnap.data();
 }
+
+
+
+
+

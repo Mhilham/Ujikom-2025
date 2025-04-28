@@ -75,19 +75,28 @@
           '</td>' +
           '<td>' + data.prioritas + '</td>' +
           '<td>' + data.tanggal + '</td>' +
+          '<td> <button class="btn btn-warning ubah" data="' +
+          data.id +
+          '">Ubah</button>' +
+          ' </td> ' +
           ' <td> <a href="#" class="btn btn-danger tombol-hapus" data="' +
           data.id +
           '">Hapus</a>' + '</td>' +
-          
           '</tr>'
         );
         nomor = nomor + 1;
       });
       
       $('.tombol-hapus').click(async function() {
-         await hapustugas($(this).attr('data'));
-         location.reload();
-       })
+        await hapustugas($(this).attr('data'));
+        location.reload();
+      })
+      
+      $('.ubah').click(async function() {
+        window.location.replace('ubahtugas.html?docId=' + $(this).attr('data'));
+      })
+      
+      
     });
   </script>
   
