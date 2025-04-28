@@ -50,3 +50,18 @@ export async function ambildaftartugas() {
 
   return hasil;
 }
+
+//fungsi untuk menambahkan tugas
+export async function tambahtugas(tugas, status, prioritas, tanggal) {
+  try {
+    const dokRef = await addDoc(collection(db, 'senin'), {
+      tugas: tugas,
+      status: status,
+      prioritas: prioritas,
+      tanggal: tanggal,
+    });
+    console.log('berhasil menembah tugas ' + dokRef.id);
+  } catch (e) {
+    console.log('gagal menambah tugas ' + e);
+  }
+}
