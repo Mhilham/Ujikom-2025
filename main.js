@@ -23,3 +23,39 @@ const firebaseConfig = {
   appId: "1:156748846014:web:4269883b14bdb400b2dfef",
   measurementId: "G-W3SBB85TF1"
 };
+
+
+// Inisialisasi aplikasi Firebase menggunakan konfigurasi di atas
+const app = initializeApp(firebaseConfig);
+
+// Mendapatkan referensi ke Firestore
+const db = getFirestore(app);
+
+
+// Fungsi untuk mengambil semua tugas dari koleksi "senin" dan mengurutkannya berdasarkan nama tugas
+export async function ambildaftartugas() {
+  // Mendapatkan referensi ke koleksi "senin"
+  const refDokumen = collection(db, "senin");
+  
+  // Membuat query untuk mengurutkan dokumen berdasarkan field "tugas"
+  const kueri = query(refDokumen, orderBy("tugas"));
+  
+  // Mengambil dokumen sesuai query
+  const cuplikankueri = await getDocs(kueri);
+
+  let hasil = [];
+  
+  // Mengonversi hasil query menjadi array tugas
+  cuplikankueri.forEach((dok) => {
+    hasil.push({
+      id: dok.id, // ID dokumen
+      tugas: dok.data().tugas, // Data tugas
+      status: dok.data().status, // Status tugas
+      prioritas: dok.data().prioritas, // Prioritas tugas
+      tanggal: dok.data().tanggal, // Tanggal tugas
+    });
+  });
+
+  // Mengembalikan hasil sebagai array
+  return hasil;
+}
