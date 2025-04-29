@@ -99,6 +99,67 @@ export async function ambiltugas(docId) {
 }
 
 
+// Ubah status tugas saja
+export async function ubahstatus(docId, statusBaru) {
+  await updateDoc(doc(db, "senin", docId), {
+    status: statusBaru,
+  });
+}
 
+// Fungsi ubah status tombol di tampilan
+export function ubahStatus(tombol) {
+  let status = tombol.dataset.status;
+
+  if (status === "Selesai") {
+    tombol.textContent = "Belum Selesai";
+    tombol.dataset.status = "Belum Selesai";
+  } else {
+    tombol.textContent = "Selesai";
+    tombol.dataset.status = "Selesai";
+  }
+}
+
+// EVENT: Klik tombol status
+$(document).on("click", ".btn-status", async function () {
+  let tugasId = $(this).attr("data-id");
+  let statusSekarang = $(this).attr("data-status");
+  let statusBaru;
+
+  if (statusSekarang === "Belum Selesai") {
+    statusBaru = "Sedang Dikerjakan";
+  } else if (statusSekarang === "Sedang Dikerjakan") {
+    statusBaru = "Selesai";
+  } else {
+    statusBaru = "Belum Selesai";
+  }
+
+  // Update tampilan tombol
+  $(this).attr("data-status", statusBaru);
+  $(this).text(statusBaru);
+  updateWarnaStatus($(this), statusBaru);
+
+  // Update database
+  await ubahstatus(tugasId, statusBaru);
+
+  console.log(`Status tugas ID ${tugasId} diubah menjadi ${statusBaru}`);
+});
+
+// Fungsi update warna tombol berdasarkan status
+function updateWarnaStatus(button, status) {
+  if (status === "Belum Selesai") {
+    button.css("background-color", "#dc3545").css("color", "white");
+  } else if (status === "Sedang Dikerjakan") {
+    button.css("background-color", "#ffc107").css("color", "black");
+  } else {
+    button.css("background-color", "#28a745").css("color", "white");
+  }
+}
+
+// Atur warna saat halaman dimuat
+$(document).ready(function () {
+  $(".btn-status").each(function () {
+    updateWarnaStatus($(this), $(this).attr("data-status"));
+  });
+});
 
 
